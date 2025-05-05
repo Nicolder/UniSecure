@@ -35,9 +35,4 @@ public class Emergencia {
 
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
-
-    @Override
-    public String toString() {
-        return "Emergencia [id=" + id + ", localidade=" + localidade + ", tipos=" + tiposEmergencia + ", data=" + dataHora + "]";
-    }
 }
