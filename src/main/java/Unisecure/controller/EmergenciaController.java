@@ -18,7 +18,5 @@ public class EmergenciaController {
         Emergencia e = new Emergencia(localidade, tipos);
         emergenciaDAO.registrar(e);
     }
-
-    // Listar todas as emergências
 }
 
