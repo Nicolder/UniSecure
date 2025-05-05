@@ -24,15 +24,34 @@ public class Emergencia {
     }
 
     // Getters e Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() { 
+        return id; 
+    }
+    public void setId(int id) { 
+        this.id = id; 
+    }
 
-    public String getLocalidade() { return localidade; }
-    public void setLocalidade(String localidade) { this.localidade = localidade; }
+    public String getLocalidade() { 
+        return localidade; 
+    }
+    
+    public void setLocalidade(String localidade) { 
+        this.localidade = localidade; 
+    }
 
-    public String getTiposEmergencia() { return tiposEmergencia; }
-    public void setTiposEmergencia(String tiposEmergencia) { this.tiposEmergencia = tiposEmergencia; }
+    public String getTiposEmergencia() { 
+        return tiposEmergencia; 
+    }
+    
+    public void setTiposEmergencia(String tiposEmergencia) { 
+        this.tiposEmergencia = tiposEmergencia; 
+    }
 
-    public LocalDateTime getDataHora() { return dataHora; }
-    public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
+    public LocalDateTime getDataHora() { 
+        return dataHora; 
+    }
+    
+    public void setDataHora(LocalDateTime dataHora) { 
+        this.dataHora = dataHora; 
+    }
 }
