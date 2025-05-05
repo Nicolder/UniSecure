@@ -1,5 +1,6 @@
 package Unisecure.view;
 
+import Unisecure.controller.PollingEmergencias;
 import Unisecure.controller.SocorristaController;
 import Unisecure.model.Socorrista;
 import java.awt.EventQueue;
@@ -145,8 +146,8 @@ public class JLoguin extends JFrame {
 
 		if (logado != null) {
 			JOptionPane.showMessageDialog(this, "Login bem-sucedido! Bem-vindo, " + logado.getNome());
-			dispose(); // fecha tela
-			new TelaEmergencia(); // abre tela principal do Socorrista
+			dispose(); // Fecha tela
+			new PollingEmergencias(new TelaEmergencia()); // Abre tela principal do Socorrista
 		} else {
 			JOptionPane.showMessageDialog(this, "Nome ou senha incorretos.");
 		}
