@@ -1,5 +1,6 @@
 package Unisecure.controller;
 
+import Unisecure.dao.Conexao;
 import Unisecure.view.TelaEmergencia;
 
 import java.sql.*;
@@ -26,7 +27,7 @@ public class PollingEmergencias {
     }
 
     private void verificarNovaEmergencia() {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unisecure", "root", "12345");
+        try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT id, localidade, tipos_emergencia FROM emergencias ORDER BY id DESC LIMIT 1")) {
 
