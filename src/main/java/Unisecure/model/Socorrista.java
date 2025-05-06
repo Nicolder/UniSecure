@@ -13,6 +13,7 @@ public class Socorrista extends Usuario{
         super(nome, senha);
     }
 
+    @Override
     public String getTipoUsuario() {
         return "Socorrista";
     }
