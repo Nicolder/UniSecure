@@ -3,8 +3,6 @@ package Unisecure.dao;
 import Unisecure.model.Totem;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TotemDAO {
 
