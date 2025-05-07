@@ -21,22 +21,4 @@ public class TotemDAO {
             e.printStackTrace();
         }
     }
-
-    public List<Totem> listarTodos() {
-        List<Totem> totens = new ArrayList<>();
-        String sql = "SELECT * FROM totens";
-
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                totens.add(new Totem(rs.getInt("id"), rs.getString("localidade")));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return totens;
-    }
 }
