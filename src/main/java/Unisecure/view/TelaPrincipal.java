@@ -26,7 +26,7 @@ public class TelaPrincipal extends JFrame {
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFocusPainted(false);
         btnLogin.addActionListener(e -> {
-            new JLoguin().setVisible(true); // Abrir tela de login do socorrista
+            new JLogin().setVisible(true); // Abrir tela de login do socorrista
             dispose(); // Fecha essa tela
         });
 

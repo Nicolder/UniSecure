@@ -65,7 +65,7 @@ public class JBotão extends JFrame {
 		LoguinButao.setAlignmentX(1.0f);
 		LoguinButao.setBounds(748, 11, 89, 23);
 		LoguinButao.addActionListener(e -> {
-			new JLoguin().setVisible(true); // Abrir tela de login do socorrista
+			new JLogin().setVisible(true); // Abrir tela de login do socorrista
 			dispose(); // Fecha essa tela
 		});
 		Cabeçalho.add(LoguinButao);
