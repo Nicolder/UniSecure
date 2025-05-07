@@ -15,8 +15,8 @@ public class EmergenciaController {
 
     // Cadastrar emergência
     public void registrarEmergencia(String localidade, String tipos) {
-        Emergencia e = new Emergencia(localidade, tipos);
-        emergenciaDAO.registrar(e);
+        Emergencia emergencia = new Emergencia(localidade, tipos);
+        emergenciaDAO.registrar(emergencia);
     }
 }
 

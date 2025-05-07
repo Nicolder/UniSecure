@@ -8,7 +8,9 @@ public class Emergencia {
     private String tiposEmergencia;
     private LocalDateTime dataHora;
 
-    public Emergencia() {}
+    public Emergencia() {
+
+    }
 
     public Emergencia(String localidade, String tiposEmergencia) {
         this.localidade = localidade;
@@ -23,7 +25,7 @@ public class Emergencia {
         this.dataHora = dataHora;
     }
 
-    // Getters e Setters
+    // Getters e Setters - Encapsulamento
     public int getId() { 
         return id; 
     }
