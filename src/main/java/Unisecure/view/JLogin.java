@@ -23,7 +23,7 @@ import java.awt.Toolkit;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 
-public class JLoguin extends JFrame {
+public class JLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel TelaPadrão;
@@ -35,7 +35,7 @@ public class JLoguin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JLoguin frame = new JLoguin();
+					JLogin frame = new JLogin();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -50,8 +50,8 @@ public class JLoguin extends JFrame {
         Color azul = new Color(100, 149, 237);
         Color vermelho = new Color(255, 102, 102);
 	 */
-	public JLoguin() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JLoguin.class.getResource("Logo.png")));
+	public JLogin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JLogin.class.getResource("Logo.png")));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 640);
