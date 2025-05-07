@@ -62,7 +62,7 @@ public class TelaEmergencia extends JFrame {
         JButton botaoAlerta = new JButton("Confirmar");
         botaoAlerta.setAlignmentX(Component.CENTER_ALIGNMENT);
         botaoAlerta.setBounds(getWidth() - 90, 5, 80, 30);
-        botaoAlerta.addActionListener(e -> painelAlerta.setVisible(false));
+        botaoAlerta.addActionListener(e -> esconderAlerta());
         painelAlerta.add(botaoAlerta);
 
 

@@ -16,14 +16,19 @@ public class Totem {
     }
 
     // Getters e Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getLocalidade() { return localidade; }
-    public void setLocalidade(String localidade) { this.localidade = localidade; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    @Override
-    public String toString() {
-        return "Totem [id=" + id + ", localidade=" + localidade + "]";
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
     }
 }
