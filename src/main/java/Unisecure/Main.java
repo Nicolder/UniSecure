@@ -13,7 +13,6 @@ public class Main {
         //socorristaController.cadastrarSocorrista("nico", "12345");
 
         //nova emergência
-        controller.registrarEmergencia("Bloco F, 1 andar", "Intoxicação");
-
+        controller.registrarEmergencia("Bloco A, 3 andar", "Choque Elétrico");
     }
 }
