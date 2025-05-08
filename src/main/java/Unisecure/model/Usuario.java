@@ -1,6 +1,6 @@
 package Unisecure.model;
 
-public abstract class Usuario {
+public class Usuario {
     protected int id;
     protected String nome;
     protected String senha;
