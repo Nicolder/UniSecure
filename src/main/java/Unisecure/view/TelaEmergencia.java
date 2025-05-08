@@ -29,7 +29,7 @@ public class TelaEmergencia extends JFrame {
         painelCentral.setBackground(Color.decode("#B3E5FC"));
         add(painelCentral, BorderLayout.CENTER);
 
-        labelUsuario = new JLabel("Olá!");
+        labelUsuario = new JLabel("Tela de Espera");
         labelUsuario.setFont(new Font("SansSerif", Font.BOLD, 24));
         labelUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         painelCentral.add(labelUsuario, BorderLayout.CENTER);

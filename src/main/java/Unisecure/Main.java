@@ -1,18 +1,11 @@
 package Unisecure;
 
-import Unisecure.controller.EmergenciaController;
-import Unisecure.controller.SocorristaController;
-import Unisecure.model.Emergencia;
+import Unisecure.view.JLogin;
 
 public class Main {
     public static void main(String[] args) {
-        EmergenciaController controller = new EmergenciaController();
-
-        SocorristaController socorristaController = new SocorristaController();
-
-        //socorristaController.cadastrarSocorrista("nico", "12345");
-
-        //nova emergência
-        controller.registrarEmergencia("Bloco A, 3 andar", "Choque Elétrico");
+        JLogin frame = new JLogin();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }
