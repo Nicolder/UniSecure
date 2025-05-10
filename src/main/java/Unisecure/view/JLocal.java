@@ -258,7 +258,5 @@ public class JLocal extends JFrame {
 		rdbtnNewRadioButton_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnNewRadioButton_3_1.setBounds(77, 0, 39, 49);
 		panel_3_1.add(rdbtnNewRadioButton_3_1);
-		
-		
 	}
 }

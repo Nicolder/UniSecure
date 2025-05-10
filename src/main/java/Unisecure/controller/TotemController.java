@@ -16,8 +16,4 @@ public class TotemController {
         Totem totem = new Totem(localidade);
         totemDAO.inserir(totem);
     }
-
-    public List<Totem> listarTotens() {
-        return totemDAO.listarTodos();
-    }
 }

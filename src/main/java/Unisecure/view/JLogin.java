@@ -1,27 +1,14 @@
 package Unisecure.view;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.*;
+
 import Unisecure.controller.PollingEmergencias;
 import Unisecure.controller.SocorristaController;
 import Unisecure.model.Socorrista;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
-import java.awt.Component;
-import java.awt.Toolkit;
 
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
 
 public class JLogin extends JFrame {
 
@@ -29,15 +16,13 @@ public class JLogin extends JFrame {
 	private JPanel TelaPadrão;
 	private JTextField UsuarioBox;
 	private JPasswordField BoxSenha;
-	private SocorristaController controller;
+	private SocorristaController controller = new SocorristaController();;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					JLogin frame = new JLogin();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,6 +40,8 @@ public class JLogin extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 640);
+		setVisible(true);
+		setLocationRelativeTo(null);
 		TelaPadrão = new JPanel();
 		TelaPadrão.setBackground(new Color(173, 216, 230));
 		TelaPadrão.setForeground(Color.BLACK);
@@ -62,8 +49,6 @@ public class JLogin extends JFrame {
 
 		setContentPane(TelaPadrão);
 		TelaPadrão.setLayout(null);
-
-		controller = new SocorristaController();
 
 		JPanel PainelMenor = new JPanel();
 		PainelMenor.setBackground(new Color(123, 164, 213));
@@ -118,7 +103,7 @@ public class JLogin extends JFrame {
 
 		JPanel Cabeçalho = new JPanel();
 		Cabeçalho.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		Cabeçalho.setBackground(new Color(250, 90, 86));
+		Cabeçalho.setBackground(new Color(255, 105, 97));
 		Cabeçalho.setForeground(Color.RED);
 		Cabeçalho.setBounds(0, 0, 847, 40);
 		TelaPadrão.add(Cabeçalho);
@@ -127,10 +112,12 @@ public class JLogin extends JFrame {
 		JButton VoltarButao = new JButton("Voltar");
 		VoltarButao.setFont(new Font("Tahoma", Font.BOLD, 13));
 		VoltarButao.setForeground(Color.WHITE);
+		VoltarButao.setFocusPainted(false);
 		VoltarButao.setBackground(new Color(73, 73, 200));
 		VoltarButao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+			dispose();
+			new TelaInicial().setVisible(true);
 			}
 		});
 		VoltarButao.setAlignmentX(Component.RIGHT_ALIGNMENT);
