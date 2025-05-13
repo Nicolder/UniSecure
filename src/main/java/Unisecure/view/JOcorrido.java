@@ -40,7 +40,7 @@ public class JOcorrido extends JFrame {
 	 * Create the frame.
 	 */
 	public JOcorrido() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JBotão.class.getResource("/view/Logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(JBotão.class.getResource("/view/Logo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 640);
 		contentPane = new JPanel();

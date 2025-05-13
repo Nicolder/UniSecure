@@ -82,7 +82,6 @@ public class TelaEmergencia extends JFrame {
     public void esconderAlerta() {
         painelAlerta.setVisible(false);
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new TelaEmergencia());
     }

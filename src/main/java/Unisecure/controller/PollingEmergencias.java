@@ -10,6 +10,7 @@ import java.util.TimerTask;
 public class PollingEmergencias {
     private TelaEmergencia tela;
     private String ultimaEmergenciaId = "";
+    private boolean primeiraVerificacao = true;
 
     public PollingEmergencias(TelaEmergencia tela) {
         this.tela = tela;
@@ -23,7 +24,7 @@ public class PollingEmergencias {
             public void run() {
                 verificarNovaEmergencia();
             }
-        }, 0, 3000); // a cada 3segundos
+        }, 0, 3000); // a cada 3 segundos
     }
 
     private void verificarNovaEmergencia() {
@@ -36,6 +37,13 @@ public class PollingEmergencias {
                 String idAtual = rs.getString("id");
                 String local = rs.getString("localidade");
                 String descricao = rs.getString("tipos_emergencia");
+
+                if (primeiraVerificacao) {
+                    // Armazena o id atual mas não exibe alerta
+                    ultimaEmergenciaId = idAtual;
+                    primeiraVerificacao = false;
+                    return;
+                }
 
                 if (!idAtual.equals(ultimaEmergenciaId)) {
                     ultimaEmergenciaId = idAtual;
