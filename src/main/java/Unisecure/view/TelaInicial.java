@@ -99,11 +99,11 @@ public class TelaInicial extends JFrame {
 
         // Texto inferior
         JLabel instrucoes = new JLabel("Clique para solicitar ajuda em situações de emergência.");
-        instrucoes.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        instrucoes.setFont(new Font("Tahoma", Font.PLAIN, 16));
         instrucoes.setForeground(new Color(25, 25, 112));
         instrucoes.setHorizontalAlignment(SwingConstants.CENTER);
-        instrucoes.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-        mainPanel.add(instrucoes, BorderLayout.SOUTH);
+        instrucoes.setBorder(BorderFactory.createEmptyBorder(0, 10, 20, 10));
+        mainPanel.add(instrucoes, BorderLayout.SOUTH );
 
         add(mainPanel);
 
