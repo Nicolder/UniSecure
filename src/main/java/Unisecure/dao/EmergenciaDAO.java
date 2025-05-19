@@ -3,7 +3,6 @@ package Unisecure.dao; //Data Acess Object
 import Unisecure.model.Emergencia;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 
 
 public class EmergenciaDAO {

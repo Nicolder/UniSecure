@@ -24,7 +24,7 @@ public class PollingEmergencias {
             public void run() {
                 verificarNovaEmergencia();
             }
-        }, 0, 3000); // a cada 3 segundos
+        }, 0, 5000); // a cada 5 segundos
     }
 
     private void verificarNovaEmergencia() {
