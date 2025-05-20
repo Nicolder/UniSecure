@@ -15,7 +15,7 @@ public class TelaInicial extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(new Color(173, 216, 230)); // Azul claro
+        mainPanel.setBackground(new Color(159, 222, 255)); // Azul claro
 
         // Topo vermelho com botão de login
         JPanel topBar = new JPanel(new BorderLayout());
@@ -45,7 +45,7 @@ public class TelaInicial extends JFrame {
         centerPanel.setOpaque(false);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 
-        // Botão circular de verdade
+        // Botão circular
         JButton btnEmergencia = new JButton("EMERGÊNCIA") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -69,7 +69,6 @@ public class TelaInicial extends JFrame {
 
             @Override
             protected void paintBorder(Graphics g) {
-                // sem borda
             }
         };
         btnEmergencia.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -88,7 +87,7 @@ public class TelaInicial extends JFrame {
                 int y = (panelHeight - size) / 3;
                 btnEmergencia.setBounds(x, y, size, size);
 
-                // Tamanho da fonte proporcional ao botão (ex: 20% da largura)
+                // Tamanho da fonte proporcional ao botão
                 int fontSize = size / 9; // você pode ajustar esse fator se quiser mais/menos
                 btnEmergencia.setFont(new Font("Tahoma", Font.BOLD, fontSize));
             }
@@ -111,14 +110,15 @@ public class TelaInicial extends JFrame {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // fecha essa tela
-                new JLogin().setVisible(true); // abre outra
+                dispose();
+                new JLogin().setVisible(true);
             }
         });
 
         // Exemplo de ação no botão de emergência
         btnEmergencia.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Emergência solicitada!");
+            dispose();
+            new TelaConfirmacaoEmergencial().setVisible(true);
         });
     }
 

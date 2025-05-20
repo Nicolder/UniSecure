@@ -36,7 +36,7 @@ public class JLogin extends JFrame {
         Color vermelho = new Color(255, 102, 102);
 	 */
 	public JLogin() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JLogin.class.getResource("Logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(JLogin.class.getResource("src/main/resources/Logo.png")));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 640);
@@ -87,15 +87,12 @@ public class JLogin extends JFrame {
 		BemVindoTxt.setBounds(300, 11, 101, 55);
 		PainelMenor.add(BemVindoTxt);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.addContainerListener(new ContainerAdapter() {
-			@Override
-			public void componentAdded(ContainerEvent e) {
-			}
-		});
-		panel_2.setBounds(268, 57, 164, 143);
-		PainelMenor.add(panel_2);
-		panel_2.setLayout(null);
+		ImageIcon alertaIcone = new ImageIcon("src/main/resources/Logo.png"); // ajuste conforme o nome do arquivo
+		Image alertaImagem = alertaIcone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		JLabel imagemLabel = new JLabel(new ImageIcon(alertaImagem));
+		PainelMenor.setLayout(null);
+		imagemLabel.setBounds(265, 40, 170, 170);
+		PainelMenor.add(imagemLabel);
 
 		BoxSenha = new JPasswordField();
 		BoxSenha.setBounds(164, 328, 382, 46);

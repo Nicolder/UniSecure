@@ -1,6 +1,5 @@
 package Unisecure;
 
-import Unisecure.view.JLogin;
 import Unisecure.view.TelaInicial;
 
 public class Main {
