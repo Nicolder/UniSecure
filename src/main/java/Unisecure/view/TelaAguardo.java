@@ -50,12 +50,12 @@ public class TelaAguardo extends JFrame {
         centerPanel.setOpaque(false);
         JLabel imagemLabel = new JLabel();
 
-//        ImageIcon icone = new ImageIcon("src/imagens/socorrista.png"); // Coloque a imagem certa aqui
-//        Image imagemEscalada = icone.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-//        imagemLabel.setIcon(new ImageIcon(imagemEscalada));
-//
-//        centerPanel.add(imagemLabel);
-//        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        ImageIcon icone = new ImageIcon("src/main/resources/socorrista.png"); // Coloque a imagem certa aqui
+        Image imagemEscalada = icone.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        imagemLabel.setIcon(new ImageIcon(imagemEscalada));
+
+        centerPanel.add(imagemLabel);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
 
         // Texto inferior
         JLabel textoAguarde = new JLabel("Emergência à caminho, espere os socorristas...");
