@@ -111,7 +111,7 @@ public class TelaInicial extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new JLogin().setVisible(true);
+                new TelaLogin();
             }
         });
 

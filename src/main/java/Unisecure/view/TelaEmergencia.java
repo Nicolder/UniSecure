@@ -2,12 +2,15 @@ package Unisecure.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.prefs.Preferences;
 
 public class TelaEmergencia extends JFrame {
     private JLabel labelUsuario;
     private JPanel painelAlerta;
     private JLabel labelLocalidade;
     private JLabel labelOcorrencia;
+
+    private Preferences prefs = Preferences.userRoot().node("unisecure_login");
 
     public TelaEmergencia() {
         setTitle("Home Brigadistas");
@@ -17,12 +20,38 @@ public class TelaEmergencia extends JFrame {
         setLayout(new BorderLayout());
 
         // TOPO
-        JPanel barraTopo = new JPanel();
-        barraTopo.setBackground(Color.decode("#FF6B6B"));
-        barraTopo.setPreferredSize(new Dimension(getWidth(), 50));
-        barraTopo.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        barraTopo.add(new JLabel(new ImageIcon("icone.png"))); // Substituir por ícone real
-        add(barraTopo, BorderLayout.NORTH);
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setBackground(new Color(255, 105, 97));
+
+        // Botão Deslogar
+        JButton botaoDeslogar = new JButton("Deslogar");
+        botaoDeslogar.setBackground(new Color(73, 73, 200)); // Mesmo tom do botão login
+        botaoDeslogar.setForeground(Color.WHITE);
+        botaoDeslogar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        botaoDeslogar.setFocusPainted(false);
+        botaoDeslogar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        botaoDeslogar.setBounds(10, 11, 89, 23); // mesma altura e largura do botão login
+        botaoDeslogar.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+
+        // Evento do botão
+        botaoDeslogar.addActionListener(e -> {
+            dispose(); // Fecha a janela atual
+            prefs.remove("usuario");
+            prefs.remove("senha");
+
+            new TelaInicial().setVisible(true);
+        });
+
+        topBar.add(botaoDeslogar, BorderLayout.WEST);
+
+        // Ícone à direita
+        JLabel icone = new JLabel(new ImageIcon("logo.png")); // Substituir com seu ícone real
+        JPanel painelIcone = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelIcone.setOpaque(false);
+        painelIcone.add(icone);
+        topBar.add(painelIcone, BorderLayout.EAST);
+
+        add(topBar, BorderLayout.NORTH);
 
         // CENTRO
         JPanel painelCentral = new JPanel(new BorderLayout());

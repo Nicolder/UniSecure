@@ -29,7 +29,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         add(tituloLabel, gbc);
 
         // Ícone de alerta
-        ImageIcon alertaIcone = new ImageIcon("src/main/resources/alerta.png"); // ajuste conforme o nome do arquivo
+        ImageIcon alertaIcone = new ImageIcon("src/main/resources/alerta.png");
         Image alertaImagem = alertaIcone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         JLabel imagemLabel = new JLabel(new ImageIcon(alertaImagem));
         gbc.gridy = 1;
