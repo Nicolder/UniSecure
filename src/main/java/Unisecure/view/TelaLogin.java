@@ -42,13 +42,13 @@ public class TelaLogin extends JFrame {
 
 	private void iniciarTela() {
 		telaPadrao = new JPanel();
-		telaPadrao.setBackground(new Color(173, 216, 230));
+		telaPadrao.setBackground(new Color(183, 230, 255));
 		telaPadrao.setBorder(new EmptyBorder(5, 5, 5, 5));
 		telaPadrao.setLayout(null);
 		setContentPane(telaPadrao);
 
 		JPanel painelMenor = new JPanel();
-		painelMenor.setBackground(new Color(123, 164, 213));
+		painelMenor.setBackground(new Color(164, 206, 255));
 		painelMenor.setBounds(62, 57, 727, 496);
 		painelMenor.setLayout(null);
 		telaPadrao.add(painelMenor);
@@ -58,7 +58,7 @@ public class TelaLogin extends JFrame {
 		bemVindoLabel.setBounds(300, 11, 101, 55);
 		painelMenor.add(bemVindoLabel);
 
-		ImageIcon logoIcon = new ImageIcon("src/main/resources/Logo.png");
+		ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
 		Image logoImg = logoIcon.getImage().getScaledInstance(182, 150, Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
 		logoLabel.setBounds(265, 40, 170, 170);
