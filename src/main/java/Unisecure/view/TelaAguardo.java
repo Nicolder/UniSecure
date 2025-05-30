@@ -50,7 +50,7 @@ public class TelaAguardo extends JFrame {
         centerPanel.setOpaque(false);
         JLabel imagemLabel = new JLabel();
 
-        ImageIcon icone = new ImageIcon("src/main/resources/socorrista.png"); // Coloque a imagem certa aqui
+        ImageIcon icone = new ImageIcon("src/main/resources/socorrista.png"); // imagem
         Image imagemEscalada = icone.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         imagemLabel.setIcon(new ImageIcon(imagemEscalada));
 

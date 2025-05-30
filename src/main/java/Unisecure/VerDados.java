@@ -1,5 +1,7 @@
 package Unisecure;
 
+import Unisecure.view.TelaAcidente;
+
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -15,5 +17,9 @@ public class VerDados {
         } catch (BackingStoreException e) {
             e.printStackTrace();
         }
+
+        TelaAcidente acidente = new TelaAcidente();
+
+        System.out.println(acidente.getOcorrencias());
     }
 }

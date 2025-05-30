@@ -29,7 +29,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         add(tituloLabel, gbc);
 
         // Ícone de alerta
-        ImageIcon alertaIcone = new ImageIcon("src/main/resources/alerta.png");
+        ImageIcon alertaIcone = new ImageIcon(getClass().getResource("/alerta.png"));
         Image alertaImagem = alertaIcone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         JLabel imagemLabel = new JLabel(new ImageIcon(alertaImagem));
         gbc.gridy = 1;
@@ -68,7 +68,13 @@ public class TelaConfirmacaoEmergencial extends JFrame {
                 new TelaInicial().setVisible(true);
             }
         });
-        confirmarButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Alarme confirmado!"));
+        confirmarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new TelaAcidente().setVisible(true);
+            }
+        });
 
         botoesPanel.add(cancelarButton);
         botoesPanel.add(confirmarButton);
