@@ -4,7 +4,7 @@ import Unisecure.dao.EmergenciaDAO;
 import Unisecure.model.Emergencia;
 
 public class EmergenciaController {
-    private EmergenciaDAO emergenciaDAO;
+    private EmergenciaDAO emergenciaDAO; //Dependencia
 
     public EmergenciaController() {
         this.emergenciaDAO = new EmergenciaDAO();

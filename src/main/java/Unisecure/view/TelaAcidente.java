@@ -78,14 +78,17 @@ public class TelaAcidente extends JFrame {
 
         // Ação do botão
         confirmar.addActionListener(e -> {
-            List<String> selecionados = getOcorrencias();
-            if (selecionados.isEmpty()) {
+            List<String> ocorrenciasSelecionadas = getOcorrencias();
+
+            if (ocorrenciasSelecionadas.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Selecione pelo menos uma ocorrência.");
-            } else {
-                System.out.println("Ocorrências marcadas: " + selecionados);
-                dispose();
-                //new TelaLocalidade(selecionados).setVisible(true); // substitua se ainda não tiver TelaLocalidade
+                return;
             }
+
+            // Envia as ocorrências para a próxima tela
+            TelaLocal telaLocal = new TelaLocal(ocorrenciasSelecionadas);
+            telaLocal.setVisible(true);
+            this.dispose();
         });
     }
 
@@ -120,12 +123,12 @@ public class TelaAcidente extends JFrame {
 
     public List<String> getOcorrencias() {
         List<String> selecionadas = new ArrayList<>();
-        if (checkTrauma.isSelected()) selecionadas.add("TRAUMA FÍSICO");
-        if (checkRespiratoria.isSelected()) selecionadas.add("EMERGÊNCIA RESPIRATÓRIA");
-        if (checkNeuro.isSelected()) selecionadas.add("PROBLEMA NEUROLÓGICO");
-        if (checkCardiaca.isSelected()) selecionadas.add("EMERGÊNCIA CARDÍACA");
-        if (checkChoque.isSelected()) selecionadas.add("CHOQUE ELÉTRICO");
-        if (checkIntoxicacao.isSelected()) selecionadas.add("INTOXICAÇÃO");
+        if (checkTrauma.isSelected()) selecionadas.add("Trauma Físico");
+        if (checkRespiratoria.isSelected()) selecionadas.add("Emergência Respiratória");
+        if (checkNeuro.isSelected()) selecionadas.add("Problema Neurológico");
+        if (checkCardiaca.isSelected()) selecionadas.add("Emergência Cardíaca");
+        if (checkChoque.isSelected()) selecionadas.add("Choque Elétrico");
+        if (checkIntoxicacao.isSelected()) selecionadas.add("Intoxicação");
         return selecionadas;
     }
 
