@@ -122,7 +122,13 @@ public class TelaLocal extends JFrame {
         }
 
         String localFinal = String.join(", ", locaisSelecionados);
-        String tiposConcatenados = String.join(", ", ocorrenciasSelecionadas);
+        String tiposConcatenados;
+
+        if (ocorrenciasSelecionadas == null || ocorrenciasSelecionadas.isEmpty()) {
+            tiposConcatenados = "Não especificado";
+        } else {
+            tiposConcatenados = String.join(", ", ocorrenciasSelecionadas);
+        }
 
         Emergencia emergencia = new Emergencia(localFinal, tiposConcatenados);
         EmergenciaDAO dao = new EmergenciaDAO();
@@ -131,6 +137,8 @@ public class TelaLocal extends JFrame {
         if (sucesso) {
             JOptionPane.showMessageDialog(this, "Emergência registrada com sucesso!");
             this.dispose();
+            // Abre a tela de aguardo após o registro
+            new TelaAguardo().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Erro ao registrar emergência.");
         }

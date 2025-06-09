@@ -80,12 +80,7 @@ public class TelaAcidente extends JFrame {
         confirmar.addActionListener(e -> {
             List<String> ocorrenciasSelecionadas = getOcorrencias();
 
-            if (ocorrenciasSelecionadas.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Selecione pelo menos uma ocorrência.");
-                return;
-            }
-
-            // Envia as ocorrências para a próxima tela
+            // Envia as ocorrências para a próxima tela, mesmo que a lista esteja vazia
             TelaLocal telaLocal = new TelaLocal(ocorrenciasSelecionadas);
             telaLocal.setVisible(true);
             this.dispose();
