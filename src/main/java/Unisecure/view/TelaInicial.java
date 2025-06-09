@@ -2,8 +2,8 @@ package Unisecure.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class TelaInicial extends JFrame {
 
@@ -14,118 +14,131 @@ public class TelaInicial extends JFrame {
         setMinimumSize(new Dimension(700, 500));
         setLocationRelativeTo(null);
 
+        // O painel principal continua com BorderLayout
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(new Color(159, 222, 255)); // Azul claro
+        mainPanel.setBackground(new Color(159, 222, 255));
 
-        // Topo vermelho com botão de login
-        JPanel topBar = new JPanel(new BorderLayout());
-        topBar.setBackground(new Color(255, 105, 97)); // Vermelho claro
-
+        // --- TOPO ---
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+        topBar.setBackground(new Color(255, 105, 97));
+        // ... (código do botão de login permanece o mesmo)
         JButton loginBtn = new JButton("Login");
         loginBtn.setBackground(new Color(73, 73, 200));
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setFont(new Font("Tahoma", Font.BOLD, 13));
         loginBtn.setFocusPainted(false);
-        loginBtn.setBounds(748, 11, 89, 23);
-        loginBtn.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         loginBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginBtn.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(25, 25, 112), 1, true),
                 BorderFactory.createEmptyBorder(8, 20, 8, 20)
         ));
-
-        JPanel loginWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-        loginWrapper.setBackground(new Color(255, 105, 97));
-        loginWrapper.add(loginBtn);
-        topBar.add(loginWrapper, BorderLayout.EAST);
+        loginBtn.addActionListener(e -> {
+            dispose();
+            new TelaLogin().setVisible(true);
+        });
+        topBar.add(loginBtn);
         mainPanel.add(topBar, BorderLayout.NORTH);
 
-        // Painel central para o botão circular real
-        JPanel centerPanel = new JPanel(null); // Layout livre para posicionar
-        centerPanel.setOpaque(false);
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-
-        // Botão circular
-        JButton btnEmergencia = new JButton("EMERGÊNCIA") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (getModel().isArmed()) {
-                    g.setColor(new Color(220, 0, 0));
-                } else if (getModel().isRollover()) {
-                    g.setColor(new Color(255, 70, 70));
-                } else {
-                    g.setColor(new Color(255, 45, 45));
-                }
-                g.fillOval(0, 0, getWidth(), getHeight());
-
-                g.setColor(Color.WHITE);
-                g.setFont(getFont());
-                FontMetrics fm = g.getFontMetrics();
-                String text = getText();
-                int textWidth = fm.stringWidth(text);
-                int textHeight = fm.getAscent();
-                g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2 - 5);
-            }
-
-            @Override
-            protected void paintBorder(Graphics g) {
-            }
-        };
-        btnEmergencia.setFont(new Font("Tahoma", Font.BOLD, 28));
-        btnEmergencia.setFocusPainted(false);
-        btnEmergencia.setContentAreaFilled(false);
-        btnEmergencia.setOpaque(false);
-        btnEmergencia.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnEmergencia.setBounds(300, 80, 280, 280); // posição inicial
-
-        centerPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                int panelWidth = centerPanel.getWidth();
-                int panelHeight = centerPanel.getHeight();
-                int size = (int)(Math.min(panelWidth, panelHeight) * 0.75); // Botão maior
-                int x = (panelWidth - size) / 2;
-                int y = (panelHeight - size) / 3;
-                btnEmergencia.setBounds(x, y, size, size);
-
-                // Tamanho da fonte proporcional ao botão
-                int fontSize = size / 9; // você pode ajustar esse fator se quiser mais/menos
-                btnEmergencia.setFont(new Font("Tahoma", Font.BOLD, fontSize));
-            }
-        });
+        // --- CENTRO ---
+        // Adicionamos nosso painel customizado ao centro do BorderLayout.
+        // Ele se expandirá para preencher o espaço disponível.
+        mainPanel.add(new PainelBotaoDinamico(), BorderLayout.CENTER);
 
 
-        centerPanel.add(btnEmergencia);
-
-        // Texto inferior
+        // --- BASE ---
         JLabel instrucoes = new JLabel("Clique para solicitar ajuda em situações de emergência.");
         instrucoes.setFont(new Font("Tahoma", Font.PLAIN, 16));
         instrucoes.setForeground(new Color(25, 25, 112));
         instrucoes.setHorizontalAlignment(SwingConstants.CENTER);
         instrucoes.setBorder(BorderFactory.createEmptyBorder(0, 10, 20, 10));
-        mainPanel.add(instrucoes, BorderLayout.SOUTH );
+        mainPanel.add(instrucoes, BorderLayout.SOUTH);
 
         add(mainPanel);
-
-        // Ação de clique no botão de login
-        loginBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new TelaLogin();
-            }
-        });
-
-        // Exemplo de ação no botão de emergência
-        btnEmergencia.addActionListener(e -> {
-            dispose();
-            new TelaConfirmacaoEmergencial().setVisible(true);
-        });
     }
+
+    /**
+     * Um painel customizado que gerencia o redimensionamento do botão de emergência.
+     */
+    private class PainelBotaoDinamico extends JPanel {
+        private final JButton btnEmergencia;
+
+        public PainelBotaoDinamico() {
+            super(new GridBagLayout()); // Usamos GridBagLayout para manter o botão sempre centralizado
+            setOpaque(false);
+
+            btnEmergencia = new BotaoCircular("EMERGÊNCIA");
+            btnEmergencia.addActionListener(e -> {
+                // Para evitar referência a 'TelaInicial.this' de dentro da classe aninhada,
+                // usamos SwingUtilities para encontrar o JFrame pai e fechá-lo.
+                JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                if (topFrame != null) {
+                    topFrame.dispose();
+                }
+                new TelaConfirmacaoEmergencial().setVisible(true);
+            });
+
+            // Adiciona o listener que vai disparar a lógica de redimensionamento
+            this.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    // Pega o menor lado do painel para usar como diâmetro
+                    int diameter = Math.min(getWidth(), getHeight());
+                    diameter = (int) (diameter * 0.70); // Usa 70% do espaço para ter uma margem
+
+                    if (diameter > 0) {
+                        // Define o novo tamanho preferencial do botão
+                        btnEmergencia.setPreferredSize(new Dimension(diameter, diameter));
+                        // Revalida o painel para que o layout manager aplique o novo tamanho
+                        revalidate();
+                    }
+                }
+            });
+
+            add(btnEmergencia, new GridBagConstraints()); // Adiciona o botão ao centro
+        }
+    }
+
+    private class BotaoCircular extends JButton {
+        public BotaoCircular(String text) {
+            super(text);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            if (getModel().isArmed()) {
+                g2.setColor(new Color(220, 0, 0));
+            } else if (getModel().isRollover()) {
+                g2.setColor(new Color(255, 70, 70));
+            } else {
+                g2.setColor(new Color(255, 45, 45));
+            }
+
+            // Preencher o oval
+            g2.fillOval(0, 0, getWidth(), getHeight());
+
+            // A fonte é dimensionada com base no tamanho atual do botão
+            int fontSize = getWidth() / 8;
+            g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
+            g2.setColor(Color.WHITE);
+
+            FontMetrics fm = g2.getFontMetrics();
+            int textWidth = fm.stringWidth(getText());
+            g2.drawString(getText(), (getWidth() - textWidth) / 2, (getHeight() + fm.getAscent()) / 2);
+            g2.dispose();
+        }
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TelaInicial tela = new TelaInicial();
-            tela.setVisible(true);
+            new TelaInicial().setVisible(true);
         });
     }
 }

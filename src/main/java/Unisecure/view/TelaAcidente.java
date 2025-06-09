@@ -1,120 +1,137 @@
 package Unisecure.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelaAcidente extends JFrame {
 
-    private JCheckBox checkTrauma, checkRespiratoria, checkNeuro, checkCardiaca, checkChoque, checkIntoxicacao;
-    private final List<String> tiposOcorrencia = List.of(
-            "TRAUMA FÍSICO",
-            "EMERGÊNCIA RESPIRATÓRIA",
-            "PROBLEMA NEUROLÓGICO",
-            "EMERGÊNCIA CARDÍACA",
-            "CHOQUE ELÉTRICO",
-            "INTOXICAÇÃO"
-    );
+    private final JCheckBox checkTrauma, checkRespiratoria, checkNeuro, checkCardiaca, checkChoque, checkIntoxicacao;
 
     public TelaAcidente() {
         setTitle("Chamado de Emergência");
         setSize(700, 635);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(500, 400));
         setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(new BorderLayout());
 
-        // Topo vermelho
-        JPanel topo = new JPanel(null);
+        // --- PAINEL DO TOPO ---
+        JPanel topo = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topo.setBackground(new Color(255, 105, 97));
-        topo.setBounds(0, 0, 700, 40);
-        add(topo);
 
         JButton voltar = new JButton("Voltar");
-        voltar.setBounds(590, 10, 90, 25);
         voltar.setBackground(new Color(65, 66, 166));
         voltar.setForeground(Color.WHITE);
         voltar.setBorderPainted(false);
         voltar.setFocusPainted(false);
-        voltar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new TelaConfirmacaoEmergencial().setVisible(true);
-            }
+        voltar.addActionListener(e -> {
+            dispose();
+            new TelaConfirmacaoEmergencial().setVisible(true);
         });
         topo.add(voltar);
+        add(topo, BorderLayout.NORTH);
 
-        // Fundo azul claro
-        JPanel fundo = new JPanel(null);
-        fundo.setBackground(new Color(159, 222, 255));
-        fundo.setBounds(0, 40, 700, 600);
-        add(fundo);
+        // --- PAINEL CENTRAL ---
+        JPanel painelCentral = new JPanel();
+        painelCentral.setLayout(new BoxLayout(painelCentral, BoxLayout.Y_AXIS));
+        painelCentral.setBackground(new Color(159, 222, 255));
+        painelCentral.setBorder(new EmptyBorder(10, 30, 10, 30));
 
-        JLabel titulo = new JLabel("OCORRIDO", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("TIPO DE OCORRÊNCIA");
         titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
         titulo.setForeground(new Color(54, 63, 150));
-        titulo.setBounds(0, 20, 700, 40);
-        fundo.add(titulo);
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setBorder(new EmptyBorder(10, 0, 20, 0));
+        painelCentral.add(titulo);
+
+        // Painel para a lista de ocorrências, para colocar dentro do ScrollPane
+        JPanel painelOcorrencias = new JPanel();
+        painelOcorrencias.setLayout(new BoxLayout(painelOcorrencias, BoxLayout.Y_AXIS));
+        painelOcorrencias.setBackground(new Color(159, 222, 255));
 
         // Criação dos blocos de ocorrência
-        checkTrauma = criarBlocoOcorrencia(fundo, "TRAUMA FÍSICO", 80, "/injured-athlete[1] 1.png");
-        checkRespiratoria = criarBlocoOcorrencia(fundo, "EMERGÊNCIA RESPIRATÓRIA", 140, "/image 2.png");
-        checkNeuro = criarBlocoOcorrencia(fundo, "PROBLEMA NEUROLÓGICO", 200, "/image 3.png");
-        checkCardiaca = criarBlocoOcorrencia(fundo, "EMERGÊNCIA CARDÍACA", 260, "/image 4.png");
-        checkChoque = criarBlocoOcorrencia(fundo, "CHOQUE ELÉTRICO", 320, "/image 5.png");
-        checkIntoxicacao = criarBlocoOcorrencia(fundo, "INTOXICAÇÃO", 380, "/image6.png");
+        checkTrauma = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("TRAUMA FÍSICO", "/injured-athlete[1] 1.png", checkTrauma));
+        painelOcorrencias.add(Box.createRigidArea(new Dimension(0, 10)));
 
+        checkRespiratoria = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("EMERGÊNCIA RESPIRATÓRIA", "/image 2.png", checkRespiratoria));
+        painelOcorrencias.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Botão Confirmar
+        checkNeuro = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("PROBLEMA NEUROLÓGICO", "/image 3.png", checkNeuro));
+        painelOcorrencias.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        checkCardiaca = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("EMERGÊNCIA CARDÍACA", "/image 4.png", checkCardiaca));
+        painelOcorrencias.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        checkChoque = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("CHOQUE ELÉTRICO", "/image 5.png", checkChoque));
+        painelOcorrencias.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        checkIntoxicacao = new JCheckBox();
+        painelOcorrencias.add(criarBlocoOcorrencia("INTOXICAÇÃO", "/image6.png", checkIntoxicacao));
+
+        // Adiciona a lista de ocorrências a um painel com rolagem
+        JScrollPane scrollPane = new JScrollPane(painelOcorrencias);
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBackground(new Color(159, 222, 255));
+        painelCentral.add(scrollPane);
+
+        add(painelCentral, BorderLayout.CENTER);
+
+        // --- PAINEL INFERIOR (BOTÃO) ---
+        JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelBotao.setBackground(new Color(159, 222, 255));
+        painelBotao.setBorder(new EmptyBorder(10, 0, 20, 0));
+
         JButton confirmar = new JButton("Confirmar");
         confirmar.setFont(new Font("SansSerif", Font.BOLD, 18));
         confirmar.setBackground(new Color(54, 63, 150));
         confirmar.setForeground(Color.WHITE);
-        confirmar.setBounds(250, 460, 200, 50);
+        confirmar.setPreferredSize(new Dimension(200, 50));
         confirmar.setBorderPainted(false);
-        fundo.add(confirmar);
-
-        // Ação do botão
         confirmar.addActionListener(e -> {
             List<String> ocorrenciasSelecionadas = getOcorrencias();
-
-            // Envia as ocorrências para a próxima tela, mesmo que a lista esteja vazia
-            TelaLocal telaLocal = new TelaLocal(ocorrenciasSelecionadas);
-            telaLocal.setVisible(true);
+            new TelaLocal(ocorrenciasSelecionadas).setVisible(true);
             this.dispose();
         });
+        painelBotao.add(confirmar);
+        add(painelBotao, BorderLayout.SOUTH);
     }
 
-    private JCheckBox criarBlocoOcorrencia(JPanel fundo, String texto, int y, String nomeImagem) {
-        JPanel bloco = new JPanel(null);
+    private JPanel criarBlocoOcorrencia(String texto, String nomeImagem, JCheckBox checkBox) {
+        JPanel bloco = new JPanel(new BorderLayout(10, 0)); // BorderLayout para alinhar
         bloco.setBackground(Color.WHITE);
-        bloco.setBounds(50, y, 600, 50);
-        fundo.add(bloco);
+        bloco.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60)); // Altura fixa, largura flexível
+        bloco.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        // TEXTO primeiro
         JLabel label = new JLabel(texto);
         label.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        label.setBounds(10, 0, 250, 50); // Começa na esquerda
-        bloco.add(label);
+        bloco.add(label, BorderLayout.CENTER);
 
-        // ÍCONE depois do texto
+        JPanel painelIconeCheck = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        painelIconeCheck.setOpaque(false);
+
         JLabel img = new JLabel();
-        img.setBounds(480, 5, 40, 40); // à direita do texto
-        Image imagemRedimensionada = new ImageIcon(getClass().getResource(nomeImagem)).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        img.setIcon(new ImageIcon(imagemRedimensionada));
-        bloco.add(img);
+        try {
+            Image imagemRedimensionada = new ImageIcon(getClass().getResource(nomeImagem)).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            img.setIcon(new ImageIcon(imagemRedimensionada));
+            painelIconeCheck.add(img);
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar imagem: " + nomeImagem);
+        }
 
-        // CHECKBOX à direita do ícone
-        JCheckBox check = new JCheckBox();
-        check.setBounds(540, 15, 20, 20);
-        check.setOpaque(false);
-        bloco.add(check);
+        checkBox.setOpaque(false);
+        painelIconeCheck.add(checkBox);
 
-        return check;
+        bloco.add(painelIconeCheck, BorderLayout.EAST);
+        return bloco;
     }
-
 
     public List<String> getOcorrencias() {
         List<String> selecionadas = new ArrayList<>();
