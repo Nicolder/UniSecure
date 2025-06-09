@@ -82,7 +82,7 @@ public class TelaInicial extends JFrame {
             public void componentResized(java.awt.event.ComponentEvent e) {
                 int panelWidth = centerPanel.getWidth();
                 int panelHeight = centerPanel.getHeight();
-                int size = (int)(Math.min(panelWidth, panelHeight) * 0.6); // Botão maior
+                int size = (int)(Math.min(panelWidth, panelHeight) * 0.75); // Botão maior
                 int x = (panelWidth - size) / 2;
                 int y = (panelHeight - size) / 3;
                 btnEmergencia.setBounds(x, y, size, size);
@@ -111,7 +111,7 @@ public class TelaInicial extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new JLogin().setVisible(true);
+                new TelaLogin();
             }
         });
 

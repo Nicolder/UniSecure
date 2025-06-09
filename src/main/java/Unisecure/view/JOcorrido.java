@@ -72,6 +72,7 @@ public class JOcorrido extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+
 		btnConfirm.setForeground(Color.WHITE);
 		btnConfirm.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnConfirm.setBackground(new Color(73, 73, 200));
