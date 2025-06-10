@@ -37,6 +37,7 @@ public class TelaLocal extends JFrame {
         JButton voltarBtn = new JButton("Voltar");
         voltarBtn.setBackground(new Color(48, 71, 157));
         voltarBtn.setForeground(Color.WHITE);
+        voltarBtn.setFocusPainted(false);
         voltarBtn.setFont(new Font("SansSerif", Font.BOLD, 13));
         voltarBtn.addActionListener(e -> {
             dispose();
