@@ -3,145 +3,109 @@ package Unisecure.view;
 import Unisecure.controller.PollingEmergencias;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
 public class TelaEmergencia extends JFrame {
-    private JLabel labelUsuario;
-    private JPanel painelAlerta;
-    private JLabel labelLocalidade;
-    private JLabel labelOcorrencia;
+    private final JLabel labelLocalidade;
+    private final JLabel labelOcorrencia;
+    private final JPanel painelAlerta;
+    private final JPanel painelCentral;
+    private final JLabel labelAguardando; // Referência para o texto "Aguardando..."
 
-    private Preferences prefs = Preferences.userRoot().node("unisecure_login");
+    private final Preferences prefs = Preferences.userRoot().node("unisecure_login");
 
     public TelaEmergencia() {
         setTitle("Home Brigadistas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1000, 600);
+        setMinimumSize(new Dimension(800, 600));
+        setSize(1000, 700);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
 
-        // TOPO
-        JPanel topBar = new JPanel(new BorderLayout());
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        contentPane.setBackground(new Color(183, 230, 255)); // Fundo geral
+
+        // --- TOPO ---
+        JPanel topBar = new JPanel(new BorderLayout(10, 10));
         topBar.setBackground(new Color(255, 105, 97));
+        topBar.setBorder(new EmptyBorder(5, 15, 5, 15));
 
-        // Botão Deslogar
         JButton botaoDeslogar = new JButton("Sair");
-        botaoDeslogar.setBackground(new Color(73, 73, 200)); // Mesmo tom do botão login
+        botaoDeslogar.setBackground(new Color(73, 73, 200));
         botaoDeslogar.setForeground(Color.WHITE);
         botaoDeslogar.setFont(new Font("Tahoma", Font.BOLD, 13));
-        botaoDeslogar.setFocusPainted(false);
         botaoDeslogar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        botaoDeslogar.setBounds(10, 11, 89, 23);
-        botaoDeslogar.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
-
         botaoDeslogar.addActionListener(e -> {
-            dispose(); // Fecha a janela atual
+            dispose();
             prefs.remove("usuario");
             prefs.remove("senha");
-
             new TelaInicial().setVisible(true);
         });
-
         topBar.add(botaoDeslogar, BorderLayout.WEST);
+        contentPane.add(topBar, BorderLayout.NORTH);
 
-        // Ícone à direita
-        JLabel icone = new JLabel(new ImageIcon("logo.png")); // Substituir com seu ícone real
-        JPanel painelIcone = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        painelIcone.setOpaque(false);
-        painelIcone.add(icone);
-        topBar.add(painelIcone, BorderLayout.EAST);
+        // --- CENTRO (Tela de Espera) ---
+        painelCentral = new JPanel(new GridBagLayout());
+        painelCentral.setOpaque(false); // Transparente para mostrar o fundo azul
 
-        add(topBar, BorderLayout.NORTH);
+        labelAguardando = new JLabel("Aguardando novas emergências...");
+        labelAguardando.setFont(new Font("SansSerif", Font.BOLD, 24));
+        labelAguardando.setForeground(new Color(0, 51, 102));
+        painelCentral.add(labelAguardando, new GridBagConstraints());
+        contentPane.add(painelCentral, BorderLayout.CENTER);
 
-        // CENTRO
-        JPanel painelCentral = new JPanel(new BorderLayout());
-        painelCentral.setBackground(Color.decode("#B3E5FC"));
-        add(painelCentral, BorderLayout.CENTER);
-
-        labelUsuario = new JLabel("Tela de Espera");
-        labelUsuario.setFont(new Font("SansSerif", Font.BOLD, 24));
-        labelUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-        painelCentral.add(labelUsuario, BorderLayout.CENTER);
-
-        // ALERTA
+        // --- PAINEL DE ALERTA (DIREITA) ---
         painelAlerta = new JPanel();
-        painelAlerta.setBackground(new Color(255, 105, 97)); // vermelho claro
         painelAlerta.setLayout(new BoxLayout(painelAlerta, BoxLayout.Y_AXIS));
-        painelAlerta.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        painelAlerta.setVisible(false);
+        painelAlerta.setBackground(new Color(255, 105, 97));
+        painelAlerta.setBorder(new EmptyBorder(20, 20, 20, 20));
+        painelAlerta.setPreferredSize(new Dimension(350, 0)); // Largura preferencial
+        painelAlerta.setVisible(false); // Começa invisível
 
-        // Título com sombra
-        JLabel tituloAlerta = new JLabel("ALERTA");
+        // Componentes do alerta
+        JLabel tituloAlerta = new JLabel("ALERTA DE EMERGÊNCIA");
         tituloAlerta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        tituloAlerta.setFont(new Font("SansSerif", Font.BOLD, 28));
+        tituloAlerta.setFont(new Font("SansSerif", Font.BOLD, 22));
         tituloAlerta.setForeground(Color.WHITE);
-        tituloAlerta.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         painelAlerta.add(tituloAlerta);
+        painelAlerta.add(Box.createVerticalStrut(25));
 
-        // Ícone de sino (pode trocar por ImageIcon depois)
-        JLabel iconem = new JLabel("🔔");
-        iconem.setFont(new Font("SansSerif", Font.PLAIN, 48));
-        iconem.setAlignmentX(Component.CENTER_ALIGNMENT);
-        iconem.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
-        painelAlerta.add(iconem);
+        labelLocalidade = new JLabel();
+        painelAlerta.add(criarCardAlerta("Localidade:", labelLocalidade));
+        painelAlerta.add(Box.createVerticalStrut(15));
+        labelOcorrencia = new JLabel();
+        painelAlerta.add(criarCardAlerta("Ocorrência:", labelOcorrencia));
+        painelAlerta.add(Box.createVerticalGlue());
 
-        // Card de Localidade
-        labelLocalidade = new JLabel("BLOCO B   SALA 210");
-        painelAlerta.add(criarCardAlerta("Localidade", labelLocalidade));
-
-        painelAlerta.add(Box.createVerticalStrut(20)); // espaçamento
-
-        // Card de Ocorrência
-        labelOcorrencia = new JLabel("CHOQUE ELÉTRICO");
-        painelAlerta.add(criarCardAlerta("Ocorrência", labelOcorrencia));
-
-
-        painelAlerta.add(Box.createVerticalStrut(30));
-
-        // Botão Confirmar (opcional)
-        JButton botaoAlerta = new JButton("Confirmar");
+        JButton botaoAlerta = new JButton("Fechar");
         botaoAlerta.setFont(new Font("SansSerif", Font.BOLD, 14));
         botaoAlerta.setBackground(Color.WHITE);
-        botaoAlerta.setForeground(Color.RED);
-        botaoAlerta.setFocusPainted(false);
-        botaoAlerta.setMaximumSize(new Dimension(120, 40));
+        botaoAlerta.setForeground(new Color(128, 0, 0));
         botaoAlerta.setAlignmentX(Component.CENTER_ALIGNMENT);
         botaoAlerta.addActionListener(e -> esconderAlerta());
         painelAlerta.add(botaoAlerta);
 
-        // Adiciona ao painel principal
-        add(painelAlerta, BorderLayout.EAST);
-
-        setVisible(true);
-    }
-
-    // Exibe alerta com dados recebidos
-    public void exibirAlerta(String localidade, String ocorrencia) {
-        labelLocalidade.setText(localidade);
-        labelOcorrencia.setText(ocorrencia);
-        painelAlerta.setVisible(true);
+        contentPane.add(painelAlerta, BorderLayout.EAST);
     }
 
     private JPanel criarCardAlerta(String titulo, JLabel valorLabel) {
         JPanel card = new JPanel();
-        card.setBackground(new Color(0xE6F0FF));
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        card.setMaximumSize(new Dimension(300, 80));
+        card.setBackground(new Color(255, 235, 238));
+        card.setBorder(new EmptyBorder(10, 15, 10, 15));
         card.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.setOpaque(true);
-        card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(10, 10, 10, 10),
-                BorderFactory.createLineBorder(new Color(0xE6F0FF), 10, true)
-        ));
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
         JLabel tituloLabel = new JLabel(titulo);
-        tituloLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        tituloLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
         tituloLabel.setForeground(new Color(0x000080));
         tituloLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        valorLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        valorLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
         valorLabel.setForeground(new Color(0x00004D));
         valorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -152,16 +116,35 @@ public class TelaEmergencia extends JFrame {
         return card;
     }
 
+    // *** MÉTODO CORRIGIDO ***
+    public void exibirAlerta(String localidade, String ocorrencia) {
+        labelLocalidade.setText("<html><p style='width:220px'>" + localidade + "</p></html>");
+        labelOcorrencia.setText("<html><p style='width:220px'>" + ocorrencia + "</p></html>");
 
-    // Oculta o alerta
+        // Apenas esconde o texto, não o painel inteiro
+        labelAguardando.setVisible(false);
+        painelAlerta.setVisible(true);
+
+        // Revalida e redesenha o container para aplicar as mudanças
+        revalidate();
+        repaint();
+    }
+
+    // *** MÉTODO CORRIGIDO ***
     public void esconderAlerta() {
         painelAlerta.setVisible(false);
+        // Mostra o texto "Aguardando..." novamente
+        labelAguardando.setVisible(true);
+
+        revalidate();
+        repaint();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             TelaEmergencia tela = new TelaEmergencia();
-            new PollingEmergencias(tela); // <- inicia o polling!
+            tela.setVisible(true);
+            new PollingEmergencias(tela);
         });
     }
 }
