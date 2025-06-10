@@ -38,6 +38,7 @@ public class TelaEmergencia extends JFrame {
         botaoDeslogar.setBackground(new Color(73, 73, 200));
         botaoDeslogar.setForeground(Color.WHITE);
         botaoDeslogar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        botaoDeslogar.setFocusPainted(false);
         botaoDeslogar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         botaoDeslogar.addActionListener(e -> {
             dispose();
@@ -130,7 +131,6 @@ public class TelaEmergencia extends JFrame {
         repaint();
     }
 
-    // *** MÉTODO CORRIGIDO ***
     public void esconderAlerta() {
         painelAlerta.setVisible(false);
         // Mostra o texto "Aguardando..." novamente
