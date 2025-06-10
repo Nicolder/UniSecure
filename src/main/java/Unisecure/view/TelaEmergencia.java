@@ -19,6 +19,7 @@ public class TelaEmergencia extends JFrame {
     private final Preferences prefs = Preferences.userRoot().node("unisecure_login");
 
     public TelaEmergencia() {
+        setVisible(true);
         setTitle("Home Brigadistas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(800, 600));
@@ -117,7 +118,6 @@ public class TelaEmergencia extends JFrame {
         return card;
     }
 
-    // *** MÉTODO CORRIGIDO ***
     public void exibirAlerta(String localidade, String ocorrencia) {
         labelLocalidade.setText("<html><p style='width:220px'>" + localidade + "</p></html>");
         labelOcorrencia.setText("<html><p style='width:220px'>" + ocorrencia + "</p></html>");
