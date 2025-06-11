@@ -1,11 +1,14 @@
 package Unisecure.controller;
 
-import Unisecure.dao.Conexao;
-import Unisecure.view.TelaEmergencia;
-
-import java.sql.*;
+import javax.swing.SwingUtilities;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
+import Unisecure.dao.Conexao;
+import Unisecure.view.TelaEmergencia;
 
 public class PollingEmergencias {
     private TelaEmergencia tela;
@@ -22,6 +25,7 @@ public class PollingEmergencias {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+
                 verificarNovaEmergencia();
             }
         }, 0, 5000); // a cada 5 segundos
@@ -35,11 +39,11 @@ public class PollingEmergencias {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String idAtual = rs.getString("id");
-                String local = rs.getString("localidade");
-                String descricao = rs.getString("tipos_emergencia");
+
+                final String local = rs.getString("localidade");
+                final String descricao = rs.getString("tipos_emergencia");
 
                 if (primeiraVerificacao) {
-                    // Armazena o id atual mas não exibe alerta
                     ultimaEmergenciaId = idAtual;
                     primeiraVerificacao = false;
                     return;
@@ -47,7 +51,12 @@ public class PollingEmergencias {
 
                 if (!idAtual.equals(ultimaEmergenciaId)) {
                     ultimaEmergenciaId = idAtual;
-                    tela.exibirAlerta(local, descricao);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            tela.exibirAlerta(local, descricao);
+                        }
+                    });
                 }
             }
         } catch (SQLException e) {

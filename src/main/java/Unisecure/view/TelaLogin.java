@@ -58,7 +58,7 @@ public class TelaLogin extends JFrame {
 		bemVindoLabel.setBounds(300, 11, 101, 55);
 		painelMenor.add(bemVindoLabel);
 
-		ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
+		ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png")); // Use a variável que criamos
 		Image logoImg = logoIcon.getImage().getScaledInstance(182, 150, Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
 		logoLabel.setBounds(265, 40, 170, 170);
@@ -108,6 +108,7 @@ public class TelaLogin extends JFrame {
 		voltarBtn.setForeground(Color.WHITE);
 		voltarBtn.setBackground(new Color(73, 73, 200));
 		voltarBtn.setBounds(748, 11, 89, 23);
+		voltarBtn.setFocusPainted(false);
 		voltarBtn.addActionListener(e -> {
 			dispose();
 			new TelaInicial().setVisible(true);
@@ -133,6 +134,7 @@ public class TelaLogin extends JFrame {
 				prefs.remove("senha");
 				prefs.putBoolean("lembrar", false);
 			}
+
 
 			dispose();
 			new PollingEmergencias(new TelaEmergencia());

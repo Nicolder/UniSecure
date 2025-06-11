@@ -34,14 +34,13 @@ public class TelaInicial extends JFrame {
         ));
         loginBtn.addActionListener(e -> {
             dispose();
-            new TelaLogin().setVisible(true);
+            new TelaLogin();
         });
         topBar.add(loginBtn);
         mainPanel.add(topBar, BorderLayout.NORTH);
 
         // --- CENTRO ---
         // Adicionamos nosso painel customizado ao centro do BorderLayout.
-        // Ele se expandirá para preencher o espaço disponível.
         mainPanel.add(new PainelBotaoDinamico(), BorderLayout.CENTER);
 
 

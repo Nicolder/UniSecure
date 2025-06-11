@@ -10,7 +10,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
     public TelaConfirmacaoEmergencial() {
         setTitle("Confirmação Emergencial");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 500);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(159, 222, 255)); // azul claro
 
