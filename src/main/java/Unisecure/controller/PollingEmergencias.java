@@ -25,7 +25,6 @@ public class PollingEmergencias {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-
                 verificarNovaEmergencia();
             }
         }, 0, 5000); // a cada 5 segundos
@@ -46,16 +45,15 @@ public class PollingEmergencias {
                 if (primeiraVerificacao) {
                     ultimaEmergenciaId = idAtual;
                     primeiraVerificacao = false;
+                    // Se for a primeira verificação e já houver uma emergência, adiciona-a à lista
+                    // A tela já carrega as emergências existentes, então não precisamos fazer isso aqui para a primeira.
                     return;
                 }
 
                 if (!idAtual.equals(ultimaEmergenciaId)) {
                     ultimaEmergenciaId = idAtual;
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            tela.exibirAlerta(local, descricao);
-                        }
+                    SwingUtilities.invokeLater(() -> {
+                        tela.adicionarNovaEmergencia(local, descricao); // Chama o novo método
                     });
                 }
             }
