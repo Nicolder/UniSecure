@@ -7,6 +7,6 @@ public class RegistroEmergencia {
         EmergenciaController controller = new EmergenciaController();
 
         //nova emergência
-        controller.registrarEmergencia("Bloco A, 1 Andar", "Ataque cardíaco");
+        controller.registrarEmergencia("Bloco C, 1 Andar", "Ataque cardíaco");
     }
 }
