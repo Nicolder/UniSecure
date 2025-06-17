@@ -29,7 +29,7 @@ public class TelaAcidente extends JFrame {
         voltar.setFocusPainted(false);
         voltar.addActionListener(e -> {
             dispose();
-            new TelaConfirmacaoEmergencial().setVisible(true);
+            new TelaInicial().setVisible(true);
         });
         topo.add(voltar);
         add(topo, BorderLayout.NORTH);

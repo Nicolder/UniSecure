@@ -116,10 +116,22 @@ public class TelaLogin extends JFrame {
 		cabecalho.add(voltarBtn);
 	}
 
+	// Dentro de Unisecure.view.TelaLogin
+
 	private void autenticar() {
 		String nome = usuarioBox.getText();
 		String senha = new String(senhaBox.getPassword());
 
+		// --- Nova Regra de Negócio: Validação da Senha ---
+		if (!isSenhaValida(senha)) {
+			JOptionPane.showMessageDialog(this,
+					"A senha deve conter no mínimo 8 caracteres, incluindo letras e números.",
+					"Erro de Validação de Senha",
+					JOptionPane.WARNING_MESSAGE);
+			return; // Sai do método se a senha não for válida
+		}
+
+		// A validação de "Usuário previamente cadastrado" já é feita pelo `controller.autenticar`.
 		Socorrista logado = controller.autenticar(nome, senha);
 
 		if (logado != null) {
@@ -135,12 +147,32 @@ public class TelaLogin extends JFrame {
 				prefs.putBoolean("lembrar", false);
 			}
 
-
 			dispose();
-			new PollingEmergencias(new TelaEmergencia());
+			new PollingEmergencias(new TelaEmergencia()); // Passa o nome para a TelaEmergencia
 		} else {
+			// Mensagem para usuário
 			JOptionPane.showMessageDialog(this, "Nome ou senha incorretos.");
 		}
+	}
+
+	// --- Método auxiliar para a validação da senha ---
+	private boolean isSenhaValida(String senha) {
+		// Senha com no mínimo 8 caracteres
+		if (senha.length() < 8) {
+			return false;
+		}
+
+		// Senha contém letras e números
+		boolean hasLetter = false;
+		boolean hasDigit = false;
+		for (char c : senha.toCharArray()) {
+			if (Character.isLetter(c)) {
+				hasLetter = true;
+			} else if (Character.isDigit(c)) {
+				hasDigit = true;
+			}
+		}
+		return hasLetter && hasDigit;
 	}
 
 	private static Socorrista loginAutomatico() {

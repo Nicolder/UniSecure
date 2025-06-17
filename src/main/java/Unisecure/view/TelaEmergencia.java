@@ -17,16 +17,16 @@ public class TelaEmergencia extends JFrame {
     private final JPanel painelAlerta; // Painel de alerta lateral (vermelho)
     private final JPanel painelConteudoPrincipal; // Painel central para o conteúdo principal
     private final JPanel painelEmergenciasList; // Painel para listar as emergências
-    private final JLabel labelBoasVindas; // Label para a mensagem de boas-vindas
+    private final JLabel labelGreeting; // Label para a mensagem de boas-vindas
 
     private final Preferences prefs = Preferences.userRoot().node("unisecure_login");
     private final EmergenciaDAO emergenciaDAO = new EmergenciaDAO(); // Instância do DAO
 
     public TelaEmergencia() {
         // Obter o nome de usuário salvo
-        String nomeUsuario = prefs.get("usuario", "Brigadista"); // Valor padrão se não encontrar
+        String nomeUsuario = prefs.get("usuario", "Socorrista"); // Valor padrão se não encontrar
 
-        setTitle("Home Brigadistas");
+        setTitle("Home");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(800, 600));
         setSize(1000, 700);
@@ -59,18 +59,18 @@ public class TelaEmergencia extends JFrame {
         contentPane.add(topBar, BorderLayout.NORTH);
 
 
-        // --- CONTEÚDO PRINCIPAL (Exibe "Olá, {Usuário}!" e últimas emergências) ---
+        // --- CONTEÚDO PRINCIPAL ---
         painelConteudoPrincipal = new JPanel();
         painelConteudoPrincipal.setLayout(new BoxLayout(painelConteudoPrincipal, BoxLayout.Y_AXIS));
         painelConteudoPrincipal.setOpaque(false);
         painelConteudoPrincipal.setBorder(new EmptyBorder(20, 50, 20, 50));
 
-        // Mensagem de boas-vindas movida para o painel de conteúdo principal
-        labelBoasVindas = new JLabel("Olá, " + nomeUsuario + "!");
-        labelBoasVindas.setFont(new Font("SansSerif", Font.BOLD, 22));
-        labelBoasVindas.setForeground(new Color(48, 71, 157));
-        labelBoasVindas.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinha à esquerda
-        painelConteudoPrincipal.add(labelBoasVindas);
+        // Mensagem de boas-vindas
+        labelGreeting = new JLabel("Olá, " + nomeUsuario + "!");
+        labelGreeting.setFont(new Font("SansSerif", Font.BOLD, 22));
+        labelGreeting.setForeground(new Color(48, 71, 157));
+        labelGreeting.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinha à esquerda
+        painelConteudoPrincipal.add(labelGreeting);
         painelConteudoPrincipal.add(Box.createVerticalStrut(15)); // Espaço abaixo da mensagem de boas-vindas
 
         // Título "Últimas emergências"
