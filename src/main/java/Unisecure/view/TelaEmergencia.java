@@ -4,7 +4,7 @@ import Unisecure.controller.PollingEmergencias;
 import Unisecure.dao.EmergenciaDAO;
 import Unisecure.model.Emergencia;
 
-import javax.sound.sampled.*; // Importar as classes de som
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -30,7 +30,6 @@ public class TelaEmergencia extends JFrame {
 
     // Mantenha o construtor sem parâmetros para compatibilidade,
     // ou remova-o se você sempre quiser passar o nome do usuário.
-    // Se mantiver, ele ainda usará as preferências ou o padrão "Brigadista".
     public TelaEmergencia() {
         this(Preferences.userRoot().node("unisecure_login").get("usuario", "Brigadista"));
     }
