@@ -1,6 +1,6 @@
 package Unisecure;
 
-import Unisecure.view.TelaAcidente;
+import Unisecure.view.TelaOcorrencia;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -18,7 +18,7 @@ public class VerDados {
             e.printStackTrace();
         }
 
-        TelaAcidente acidente = new TelaAcidente();
+        TelaOcorrencia acidente = new TelaOcorrencia();
 
         System.out.println(acidente.getOcorrencias());
     }
