@@ -21,7 +21,6 @@ public class TelaInicial extends JFrame {
         // --- TOPO ---
         JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         topBar.setBackground(new Color(255, 105, 97));
-        // ... (código do botão de login permanece o mesmo)
         JButton loginBtn = new JButton("Login");
         loginBtn.setBackground(new Color(73, 73, 200));
         loginBtn.setForeground(Color.WHITE);
@@ -40,7 +39,6 @@ public class TelaInicial extends JFrame {
         mainPanel.add(topBar, BorderLayout.NORTH);
 
         // --- CENTRO ---
-        // Adicionamos nosso painel customizado ao centro do BorderLayout.
         mainPanel.add(new PainelBotaoDinamico(), BorderLayout.CENTER);
 
 
