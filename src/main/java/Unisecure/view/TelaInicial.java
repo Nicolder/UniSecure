@@ -55,9 +55,6 @@ public class TelaInicial extends JFrame {
         add(mainPanel);
     }
 
-    /**
-     * Um painel customizado que gerencia o redimensionamento do botão de emergência.
-     */
     private class PainelBotaoDinamico extends JPanel {
         private final JButton btnEmergencia;
 
@@ -67,8 +64,7 @@ public class TelaInicial extends JFrame {
 
             btnEmergencia = new BotaoCircular("EMERGÊNCIA");
             btnEmergencia.addActionListener(e -> {
-                // Para evitar referência a 'TelaInicial.this' de dentro da classe aninhada,
-                // usamos SwingUtilities para encontrar o JFrame pai e fechá-lo.
+
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
                 if (topFrame != null) {
                     topFrame.dispose();
@@ -76,7 +72,7 @@ public class TelaInicial extends JFrame {
                 new TelaConfirmacaoEmergencial().setVisible(true);
             });
 
-            // Adiciona o listener que vai disparar a lógica de redimensionamento
+            //listener que vai disparar a lógica de redimensionamento
             this.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentResized(ComponentEvent e) {
@@ -87,7 +83,7 @@ public class TelaInicial extends JFrame {
                     if (diameter > 0) {
                         // Define o novo tamanho preferencial do botão
                         btnEmergencia.setPreferredSize(new Dimension(diameter, diameter));
-                        // Revalida o painel para que o layout manager aplique o novo tamanho
+
                         revalidate();
                     }
                 }

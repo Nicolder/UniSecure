@@ -35,8 +35,8 @@ public class TelaAguardo extends JFrame {
         ));
 
         btnVoltar.addActionListener((ActionEvent e) -> {
-            dispose(); // fecha a tela atual
-            new TelaInicial().setVisible(true); // volta para a tela inicial (ajuste conforme necessário)
+            dispose();
+            new TelaInicial().setVisible(true);
         });
 
         JPanel voltarWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
