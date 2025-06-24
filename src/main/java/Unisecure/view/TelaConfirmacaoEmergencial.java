@@ -2,8 +2,6 @@ package Unisecure.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TelaConfirmacaoEmergencial extends JFrame {
 
@@ -110,7 +108,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         });
         confirmarButton.addActionListener(e -> {
             dispose();
-            new TelaAcidente().setVisible(true);
+            new TelaOcorrencia().setVisible(true);
         });
 
         botoesPanel.add(cancelarButton);

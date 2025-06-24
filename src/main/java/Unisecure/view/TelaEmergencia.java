@@ -4,9 +4,12 @@ import Unisecure.controller.PollingEmergencias;
 import Unisecure.dao.EmergenciaDAO;
 import Unisecure.model.Emergencia;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.IOException; // Para lidar com exceções de I/O
+import java.net.URL; // Para carregar o recurso de som
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -17,14 +20,23 @@ public class TelaEmergencia extends JFrame {
     private final JPanel painelAlerta; // Painel de alerta lateral (vermelho)
     private final JPanel painelConteudoPrincipal; // Painel central para o conteúdo principal
     private final JPanel painelEmergenciasList; // Painel para listar as emergências
-    private final JLabel labelBoasVindas; // Label para a mensagem de boas-vindas
+    private final JLabel labelGreeting; // Label para a mensagem de boas-vindas
 
     private final Preferences prefs = Preferences.userRoot().node("unisecure_login");
     private final EmergenciaDAO emergenciaDAO = new EmergenciaDAO(); // Instância do DAO
 
+    // Adicione uma referência para o clipe de áudio se quiser controlá-lo (parar, pausar, etc.)
+    private Clip clipAlerta;
+
+    // Mantenha o construtor sem parâmetros para compatibilidade,
+    // ou remova-o se você sempre quiser passar o nome do usuário.
     public TelaEmergencia() {
-        // Obter o nome de usuário salvo
-        String nomeUsuario = prefs.get("usuario", "Brigadista"); // Valor padrão se não encontrar
+        this(Preferences.userRoot().node("unisecure_login").get("usuario", "Brigadista"));
+    }
+
+    public TelaEmergencia(String usuarioLogado) { // Construtor com parâmetro
+        // Obter o nome de usuário salvo ou passado
+        String nomeUsuario = usuarioLogado;
 
         setTitle("Home Brigadistas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,24 +65,26 @@ public class TelaEmergencia extends JFrame {
             prefs.remove("usuario");
             prefs.remove("senha");
             prefs.putBoolean("lembrar", false);
+            // Parar o som de alerta ao deslogar
+            pararSomAlerta();
             new TelaInicial().setVisible(true);
         });
         topBar.add(botaoDeslogar, BorderLayout.EAST);
         contentPane.add(topBar, BorderLayout.NORTH);
 
 
-        // --- CONTEÚDO PRINCIPAL (Exibe "Olá, {Usuário}!" e últimas emergências) ---
+        // --- CONTEÚDO PRINCIPAL ---
         painelConteudoPrincipal = new JPanel();
         painelConteudoPrincipal.setLayout(new BoxLayout(painelConteudoPrincipal, BoxLayout.Y_AXIS));
         painelConteudoPrincipal.setOpaque(false);
         painelConteudoPrincipal.setBorder(new EmptyBorder(20, 50, 20, 50));
 
-        // Mensagem de boas-vindas movida para o painel de conteúdo principal
-        labelBoasVindas = new JLabel("Olá, " + nomeUsuario + "!");
-        labelBoasVindas.setFont(new Font("SansSerif", Font.BOLD, 22));
-        labelBoasVindas.setForeground(new Color(48, 71, 157));
-        labelBoasVindas.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinha à esquerda
-        painelConteudoPrincipal.add(labelBoasVindas);
+        // Mensagem de boas-vindas
+        labelGreeting = new JLabel("Olá, " + nomeUsuario + "!"); // Usa o nome de usuário passado
+        labelGreeting.setFont(new Font("SansSerif", Font.BOLD, 22));
+        labelGreeting.setForeground(new Color(48, 71, 157));
+        labelGreeting.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinha à esquerda
+        painelConteudoPrincipal.add(labelGreeting);
         painelConteudoPrincipal.add(Box.createVerticalStrut(15)); // Espaço abaixo da mensagem de boas-vindas
 
         // Título "Últimas emergências"
@@ -136,6 +150,36 @@ public class TelaEmergencia extends JFrame {
         carregarEmergenciasExistentes();
 
         setVisible(true);
+    }
+
+    // --- NOVO MÉTODO: Tocar o som de alerta ---
+    private void tocarSomAlerta() {
+        try {
+            // Carrega o arquivo de som a partir dos recursos
+            URL soundUrl = getClass().getResource("/alerta_som.wav");
+            if (soundUrl == null) {
+                System.err.println("Arquivo de som não encontrado: /alerta_som.wav");
+                return;
+            }
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundUrl);
+            clipAlerta = AudioSystem.getClip();
+            clipAlerta.open(audioStream);
+            clipAlerta.loop(Clip.LOOP_CONTINUOUSLY); // Toca o som em loop
+            clipAlerta.start(); // Inicia a reprodução
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("Erro ao tocar o som de alerta: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // --- NOVO MÉTODO: Parar o som de alerta ---
+    private void pararSomAlerta() {
+        if (clipAlerta != null && clipAlerta.isRunning()) {
+            clipAlerta.stop();
+            clipAlerta.close();
+            clipAlerta = null; // Libera o recurso
+        }
     }
 
     private JPanel criarCardAlerta(String titulo, JLabel valorLabel) {
@@ -207,6 +251,8 @@ public class TelaEmergencia extends JFrame {
         labelOcorrencia.setText("<html><p style='width:220px'>" + ocorrencia + "</p></html>");
         painelAlerta.setVisible(true);
 
+        tocarSomAlerta(); // Chama o método para tocar o som de alerta
+
         revalidate();
         repaint();
     }
@@ -226,6 +272,7 @@ public class TelaEmergencia extends JFrame {
 
     public void esconderAlerta() {
         painelAlerta.setVisible(false);
+        pararSomAlerta();
         revalidate();
         repaint();
     }

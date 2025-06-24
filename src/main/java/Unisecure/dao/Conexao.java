@@ -1,4 +1,4 @@
-package Unisecure.dao;
+package Unisecure.dao; //Data Acess Object
 
 import java.sql.Connection;
 import java.sql.DriverManager;

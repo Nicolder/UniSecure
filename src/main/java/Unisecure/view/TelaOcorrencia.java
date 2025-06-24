@@ -6,11 +6,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TelaAcidente extends JFrame {
+public class TelaOcorrencia extends JFrame {
 
     private final JCheckBox checkTrauma, checkRespiratoria, checkNeuro, checkCardiaca, checkChoque, checkIntoxicacao;
 
-    public TelaAcidente() {
+    public TelaOcorrencia() {
         setTitle("Chamado de Emergência");
         setSize(700, 635);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ public class TelaAcidente extends JFrame {
         voltar.setFocusPainted(false);
         voltar.addActionListener(e -> {
             dispose();
-            new TelaConfirmacaoEmergencial().setVisible(true);
+            new TelaInicial().setVisible(true);
         });
         topo.add(voltar);
         add(topo, BorderLayout.NORTH);
@@ -145,6 +145,6 @@ public class TelaAcidente extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TelaAcidente().setVisible(true));
+        SwingUtilities.invokeLater(() -> new TelaOcorrencia().setVisible(true));
     }
 }
