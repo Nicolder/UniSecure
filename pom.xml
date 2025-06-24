@@ -12,7 +12,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source> <maven.compiler.target>11</maven.compiler.target> </properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -42,43 +44,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version> <configuration>
-      </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <id>criar-jar-app1</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <archive>
-                <manifest>
-                  <addClasspath>true</addClasspath>
-                  <mainClass>org.TesteBanco.MainApp1</mainClass> </manifest>
-              </archive>
-              <classifier>app1</classifier> </configuration>
-          </execution>
-
-          <execution>
-            <id>criar-jar-app2</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <archive>
-                <manifest>
-                  <addClasspath>true</addClasspath>
-                  <mainClass>org.TesteBanco.MainApp2</mainClass> </manifest>
-              </archive>
-              <classifier>app2</classifier> </configuration>
-          </execution>
-        </executions>
+        <version>3.11.0</version>
+        <configuration>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -87,7 +55,7 @@
         <version>3.6.0</version>
         <executions>
           <execution>
-            <id>make-assembly-app1</id>
+            <id>create-main-app-jar</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -95,16 +63,16 @@
             <configuration>
               <archive>
                 <manifest>
-                  <mainClass>org.TesteBanco.MainApp1</mainClass>
-                </manifest>
+                  <mainClass>Unisecure.Main</mainClass> </manifest>
               </archive>
               <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
-              <classifier>app1-full</classifier> </configuration>
+              <classifier>app-inicial</classifier> </configuration>
           </execution>
+
           <execution>
-            <id>make-assembly-app2</id>
+            <id>create-login-app-jar</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -112,14 +80,33 @@
             <configuration>
               <archive>
                 <manifest>
-                  <mainClass>org.TesteBanco.MainApp2</mainClass>
+                  <mainClass>Unisecure.MainLogin</mainClass> </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <classifier>app-login</classifier> </configuration>
+          </execution>
+
+          <execution>
+            <id>create-register-emergency-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>Unisecure.RegistroEmergencia</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
-              <classifier>app2-full</classifier> </configuration>
+              <classifier>app-registro-emergencia</classifier>
+            </configuration>
           </execution>
+
         </executions>
       </plugin>
 
