@@ -58,6 +58,7 @@ public class TelaLogin extends JFrame {
 		bemVindoLabel.setBounds(300, 11, 101, 55);
 		painelMenor.add(bemVindoLabel);
 
+		// IMAGEM - LOGO
 		ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Logo.png"));
 		Image logoImg = logoIcon.getImage().getScaledInstance(182, 150, Image.SCALE_SMOOTH);
 		JLabel logoLabel = new JLabel(new ImageIcon(logoImg));

@@ -65,7 +65,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         gbc.insets = new Insets(10, 10, 20, 10);
         add(tituloLabel, gbc);
 
-        // Ícone de alerta -
+        // IMAGEM - ALERTA
         ImageIcon alertaIcone = new ImageIcon(getClass().getResource("/alerta.png"));
         Image alertaImagem = alertaIcone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         JLabel imagemLabel = new JLabel(new ImageIcon(alertaImagem));
