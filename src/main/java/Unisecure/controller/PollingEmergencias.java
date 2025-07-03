@@ -1,64 +1,78 @@
 package Unisecure.controller;
 
 import javax.swing.SwingUtilities;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Timer;
-import java.util.TimerTask;
-import Unisecure.dao.Conexao;
+import java.sql.SQLException; // Manter import para o catch, caso Conexao lance
+import Unisecure.dao.Conexao; // Apenas para referência de erro se Conexao.conectar falhar na base
+import Unisecure.dao.EmergenciaDAO; // Usar o novo DAO
+import Unisecure.model.Emergencia; // Importar o modelo Emergencia
 import Unisecure.view.TelaEmergencia;
+
+// Objetivo: Verificar banco em busca de novas emergências
 
 public class PollingEmergencias {
     private TelaEmergencia tela;
-    private String ultimaEmergenciaId = "";
+    private String ultimaEmergenciaId;
     private boolean primeiraVerificacao = true;
+    private EmergenciaDAO emergenciaDAO;
+
+    private Thread pollingThread;
+    private boolean running = true;
 
     public PollingEmergencias(TelaEmergencia tela) {
         this.tela = tela;
-        iniciar();
+        this.emergenciaDAO = new EmergenciaDAO();
+        iniciarPolling();
     }
 
-    private void iniciar() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+    private void iniciarPolling() {
+        pollingThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                verificarNovaEmergencia();
+                while (running) { // Loop da thread
+                    verificarNovaEmergencia();
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        System.out.println("Polling de emergências interrompido.");
+                        Thread.currentThread().interrupt();
+                        running = false;
+                    }
+                }
             }
-        }, 0, 5000); // a cada 5 segundos
+        });
+        pollingThread.start();
     }
 
     private void verificarNovaEmergencia() {
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT id, localidade, tipos_emergencia FROM emergencias ORDER BY id DESC LIMIT 1")) {
+        Emergencia ultimaEmergencia = null;
 
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String idAtual = rs.getString("id");
-
-                final String local = rs.getString("localidade");
-                final String descricao = rs.getString("tipos_emergencia");
-
-                if (primeiraVerificacao) {
-                    ultimaEmergenciaId = idAtual;
-                    primeiraVerificacao = false;
-                    // Se for a primeira verificação e já houver uma emergência, adiciona-a à lista
-                    // A tela já carrega as emergências existentes, então não precisamos fazer isso aqui para a primeira.
-                    return;
-                }
-
-                if (!idAtual.equals(ultimaEmergenciaId)) {
-                    ultimaEmergenciaId = idAtual;
-                    SwingUtilities.invokeLater(() -> {
-                        tela.adicionarNovaEmergencia(local, descricao); // Chama o novo método
-                    });
-                }
-            }
-        } catch (SQLException e) {
+        try {
+            ultimaEmergencia = emergenciaDAO.buscarUltimaEmergencia();
+        } catch (Exception e) {
             System.err.println("Erro ao verificar emergências: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        if (ultimaEmergencia != null) {
+            String idAtual = String.valueOf(ultimaEmergencia.getId());
+
+            if (primeiraVerificacao) {
+                ultimaEmergenciaId = idAtual;
+                primeiraVerificacao = false;
+
+                return;
+            }
+
+            if (!idAtual.equals(ultimaEmergenciaId)) {
+                ultimaEmergenciaId = idAtual;
+                final String local = ultimaEmergencia.getLocalidade();
+                final String descricao = ultimaEmergencia.getTiposEmergencia();
+
+                SwingUtilities.invokeLater(() -> {
+                    tela.adicionarNovaEmergencia(local, descricao);
+                });
+            }
         }
     }
 }

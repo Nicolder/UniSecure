@@ -1,12 +1,10 @@
-package Unisecure.dao; //Data Acess Object
+package Unisecure.dao;
 
 import Unisecure.model.Emergencia;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class EmergenciaDAO {
 
@@ -23,6 +21,7 @@ public class EmergenciaDAO {
             return true;
 
         } catch (SQLException ex) {
+            System.err.println("Erro ao registrar emergência: " + ex.getMessage()); // Saída de erro
             ex.printStackTrace();
             return false;
         }
@@ -44,8 +43,30 @@ public class EmergenciaDAO {
                 emergencias.add(new Emergencia(id, localidade, tiposEmergencia, dataHora));
             }
         } catch (SQLException e) {
+            System.err.println("Erro ao listar emergências: " + e.getMessage()); // Saída de erro
             e.printStackTrace();
         }
         return emergencias;
+    }
+
+    // NOVO MÉTODO para buscar a última emergência
+    public Emergencia buscarUltimaEmergencia() {
+        String sql = "SELECT id, localidade, tipos_emergencia, data_hora FROM emergencias ORDER BY id DESC LIMIT 1";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String localidade = rs.getString("localidade");
+                String tiposEmergencia = rs.getString("tipos_emergencia");
+                LocalDateTime dataHora = rs.getTimestamp("data_hora").toLocalDateTime();
+                return new Emergencia(id, localidade, tiposEmergencia, dataHora);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar a última emergência: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }
