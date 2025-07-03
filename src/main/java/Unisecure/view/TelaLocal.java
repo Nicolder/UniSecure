@@ -23,7 +23,7 @@ public class TelaLocal extends JFrame {
 
         setTitle("Local do Ocorrido");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(400, 550)); // Reduzido o mínimo para permitir mais flexibilidade
+        setMinimumSize(new Dimension(400, 550));
         setSize(700, 635);
         setLocationRelativeTo(null);
 
@@ -117,7 +117,6 @@ public class TelaLocal extends JFrame {
     }
 
     private void registrarEmergencia() {
-        // Lógica de registro...
         List<String> locaisSelecionados = new ArrayList<>();
         blocosCheckboxes.stream().filter(JCheckBox::isSelected).map(AbstractButton::getText).forEach(locaisSelecionados::add);
         andaresCheckboxes.stream().filter(JCheckBox::isSelected).map(AbstractButton::getText).forEach(locaisSelecionados::add);
@@ -140,10 +139,6 @@ public class TelaLocal extends JFrame {
         }
     }
 
-    /**
-     * Um painel customizado que usa GridLayout e se reajusta dinamicamente
-     * conforme o tamanho da janela muda.
-     */
     private class PainelDeOpcoesDinamico extends JPanel {
         private final GridLayout gridLayout;
         private final int componentCount;

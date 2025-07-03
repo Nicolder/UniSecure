@@ -25,11 +25,8 @@ public class TelaEmergencia extends JFrame {
     private final Preferences prefs = Preferences.userRoot().node("unisecure_login");
     private final EmergenciaDAO emergenciaDAO = new EmergenciaDAO(); // Instância do DAO
 
-    // Adicione uma referência para o clipe de áudio se quiser controlá-lo (parar, pausar, etc.)
     private Clip clipAlerta;
 
-    // Mantenha o construtor sem parâmetros para compatibilidade,
-    // ou remova-o se você sempre quiser passar o nome do usuário.
     public TelaEmergencia() {
         this(Preferences.userRoot().node("unisecure_login").get("usuario", "Brigadista"));
     }
@@ -87,7 +84,7 @@ public class TelaEmergencia extends JFrame {
         painelConteudoPrincipal.add(labelGreeting);
         painelConteudoPrincipal.add(Box.createVerticalStrut(15)); // Espaço abaixo da mensagem de boas-vindas
 
-        // Título "Últimas emergências"
+        // Titulo -
         JLabel tituloEmergencias = new JLabel("Últimas emergências");
         tituloEmergencias.setFont(new Font("SansSerif", Font.BOLD, 20));
         tituloEmergencias.setForeground(new Color(0, 51, 102));
@@ -113,7 +110,7 @@ public class TelaEmergencia extends JFrame {
         contentPane.add(painelConteudoPrincipal, BorderLayout.CENTER);
 
 
-        // --- PAINEL DE ALERTA (DIREITA) ---
+        // --- PAINEL DE ALERTA ---
         painelAlerta = new JPanel();
         painelAlerta.setLayout(new BoxLayout(painelAlerta, BoxLayout.Y_AXIS));
         painelAlerta.setBackground(new Color(255, 105, 97));
@@ -146,13 +143,11 @@ public class TelaEmergencia extends JFrame {
 
         contentPane.add(painelAlerta, BorderLayout.EAST);
 
-        // Carrega as emergências existentes ao iniciar a tela
         carregarEmergenciasExistentes();
 
         setVisible(true);
     }
 
-    // --- NOVO MÉTODO: Tocar o som de alerta ---
     private void tocarSomAlerta() {
         try {
             // Carrega o arquivo de som a partir dos recursos
@@ -173,7 +168,6 @@ public class TelaEmergencia extends JFrame {
         }
     }
 
-    // --- NOVO MÉTODO: Parar o som de alerta ---
     private void pararSomAlerta() {
         if (clipAlerta != null && clipAlerta.isRunning()) {
             clipAlerta.stop();
@@ -251,7 +245,7 @@ public class TelaEmergencia extends JFrame {
         labelOcorrencia.setText("<html><p style='width:220px'>" + ocorrencia + "</p></html>");
         painelAlerta.setVisible(true);
 
-        tocarSomAlerta(); // Chama o método para tocar o som de alerta
+        tocarSomAlerta();
 
         revalidate();
         repaint();

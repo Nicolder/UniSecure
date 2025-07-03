@@ -5,10 +5,6 @@ import java.awt.*;
 
 public class TelaConfirmacaoEmergencial extends JFrame {
 
-    /**
-     * Classe interna para criar botões com cantos arredondados,
-     * replicando o design do protótipo.
-     */
     private class RoundedButton extends JButton {
         private final Color buttonColor;
         private final int cornerRadius;
@@ -52,7 +48,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 635);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(159, 222, 255)); // Cor de fundo do protótipo
+        getContentPane().setBackground(new Color(159, 222, 255));
 
         // Retornando ao GridBagLayout original para centralizar os itens
         setLayout(new GridBagLayout());
@@ -61,7 +57,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
 
-        // Título - Ajustado para SansSerif e com mais espaçamento
+        // Título -
         JLabel tituloLabel = new JLabel("CONFIRMAÇÃO EMERGENCIAL");
         tituloLabel.setFont(new Font("SansSerif", Font.BOLD, 26));
         tituloLabel.setForeground(new Color(48, 25, 166)); // Cor original mantida
@@ -69,7 +65,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         gbc.insets = new Insets(10, 10, 20, 10);
         add(tituloLabel, gbc);
 
-        // Ícone de alerta - Lógica original mantida
+        // IMAGEM - ALERTA
         ImageIcon alertaIcone = new ImageIcon(getClass().getResource("/alerta.png"));
         Image alertaImagem = alertaIcone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         JLabel imagemLabel = new JLabel(new ImageIcon(alertaImagem));
@@ -77,7 +73,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         add(imagemLabel, gbc);
 
-        // Texto de aviso - Ajustado para SansSerif e tamanho de fonte
+        // Texto de aviso -
         JLabel avisoLabel = new JLabel("Em caso de alarme falso punições serão aplicadas!");
         avisoLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
         avisoLabel.setForeground(new Color(48, 25, 166)); // Cor original mantida
@@ -92,7 +88,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         Color corCancelar = new Color(239, 83, 80); // Vermelho mais suave, fiel ao protótipo
         Color corConfirmar = new Color(48, 25, 166); // Azul original
 
-        // Botões arredondados
+
         JButton cancelarButton = new RoundedButton("Cancelar", corCancelar, 25);
         cancelarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         cancelarButton.setPreferredSize(new Dimension(160, 45));
@@ -101,7 +97,7 @@ public class TelaConfirmacaoEmergencial extends JFrame {
         confirmarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         confirmarButton.setPreferredSize(new Dimension(160, 45));
 
-        // Ações dos botões - Lógica original mantida
+        // Ações dos botões -
         cancelarButton.addActionListener(e -> {
             dispose();
             new TelaInicial().setVisible(true);
