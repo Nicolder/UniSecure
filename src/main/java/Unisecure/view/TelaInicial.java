@@ -60,7 +60,7 @@ public class TelaInicial extends JFrame {
             super(new GridBagLayout()); // Usamos GridBagLayout para manter o botão sempre centralizado
             setOpaque(false);
 
-            btnEmergencia = new BotaoCircular("EMERGÊNCIA");
+            btnEmergencia = new BotaoCircular("Emergência");
             btnEmergencia.addActionListener(e -> {
 
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
